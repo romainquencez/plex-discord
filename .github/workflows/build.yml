@@ -8,6 +8,20 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: plex-discord
 jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create GitHub release
+        id: ghrelease
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          generateReleaseNotes: true
+
   build:
     runs-on: ubuntu-latest
     steps:
