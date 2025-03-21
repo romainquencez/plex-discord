@@ -6,7 +6,6 @@ on:
       - "v*"
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: plex-discord
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -35,10 +34,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ github.repository }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          tags: ${{ env.REGISTRY }}/${{ github.repository }}:latest
           labels: ${{ steps.meta.outputs.labels }}
