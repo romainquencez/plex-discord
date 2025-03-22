@@ -10,10 +10,6 @@ Required variables :
 - `PLEX_URL` : your server's IP adresse (eg http://192.168.1.1:32400)
 - `PLEX_TOKEN` : your server's token, see https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/
 
-Optional variables :
-
-- `MAX_RESULTS` : maximum number of items to post each time (default to `10`)
-
 ## Installation
 
 ### Docker

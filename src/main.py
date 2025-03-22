@@ -12,7 +12,6 @@ load_dotenv()
 WEBHOOK_URL = os.environ["WEBHOOK_URL"]
 PLEX_URL = os.environ["PLEX_URL"]
 PLEX_TOKEN = os.environ["PLEX_TOKEN"]
-MAX_RESULTS = int(os.environ.get("MAX_RESULTS", 10))
 FILENAME = "last_execution.txt"
 
 def main():
