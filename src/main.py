@@ -30,7 +30,7 @@ def main():
 
     # get recently added medias
     medias = plex.library.recentlyAdded()
-    for (index, media) in enumerate(medias):
+    for media in medias:
         added_at = int(media.addedAt.timestamp())
 
         # if media is older than last added date, skip it
