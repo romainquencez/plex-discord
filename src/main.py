@@ -28,45 +28,45 @@ def main():
     except FileNotFoundError:
         last_execution = None
 
-    # get recently added videos
-    movies = plex.library.recentlyAdded()
-    for (index, movie) in enumerate(movies):
-        added_at = int(movie.addedAt.timestamp())
+    # get recently added medias
+    medias = plex.library.recentlyAdded()
+    for (index, media) in enumerate(medias):
+        added_at = int(media.addedAt.timestamp())
 
-        # if movie is older than last added date, skip it
+        # if media is older than last added date, skip it
         if last_execution is None or added_at < last_execution:
             break
 
-        title = f"{movie.parentTitle} - {movie.title}" if hasattr(movie, "parentTitle") else movie.title
+        title = f"{media.parentTitle} - {media.title}" if hasattr(media, "parentTitle") else media.title
 
         embed = DiscordEmbed(
             title=title,
-            description=movie.summary,
-            color=movie.ultraBlurColors.topLeft if movie.ultraBlurColors else "EBAF00"
+            description=media.summary,
+            color=media.ultraBlurColors.topLeft if media.ultraBlurColors else "EBAF00"
         )
 
-        if movie.year:
-            embed.add_embed_field(name="Année de sortie", value=str(movie.year))
+        if media.year:
+            embed.add_embed_field(name="Année de sortie", value=str(media.year))
 
-        if movie.audienceRating:
-            embed.add_embed_field(name="Note des spectateurs", value=f"{movie.audienceRating} / 10")
+        if media.audienceRating:
+            embed.add_embed_field(name="Note des spectateurs", value=f"{media.audienceRating} / 10")
 
-        if hasattr(movie, "genres") and movie.genres:
-            embed.add_embed_field(name="Genres" if len(movie.genres) > 1 else "Genre", value=", ".join([genre.tag for genre in movie.genres]))
+        if hasattr(media, "genres") and media.genres:
+            embed.add_embed_field(name="Genres" if len(media.genres) > 1 else "Genre", value=", ".join([genre.tag for genre in media.genres]))
 
-        if hasattr(movie, "roles") and movie.roles:
-            embed.add_embed_field(name="Acteurs" if len(movie.roles) > 1 else "Acteur", value=", ".join([role.tag for role in movie.roles]))
+        if hasattr(media, "roles") and media.roles:
+            embed.add_embed_field(name="Acteurs" if len(media.roles) > 1 else "Acteur", value=", ".join([role.tag for role in media.roles]))
 
-        if hasattr(movie, "directors") and movie.directors:
-            embed.add_embed_field(name="Réalisateurs" if len(movie.directors) > 1 else "Réalisateur", value=", ".join([director.tag for director in movie.directors]))
+        if hasattr(media, "directors") and media.directors:
+            embed.add_embed_field(name="Réalisateurs" if len(media.directors) > 1 else "Réalisateur", value=", ".join([director.tag for director in media.directors]))
 
         webhook.add_embed(embed)
 
-        webhook.content=f"Nouveau film ajouté sur Plex : https://app.plex.tv/desktop/#!/server/{plex.machineIdentifier}/details?key={movie.key}"
+        webhook.content=f"Nouveau film ajouté sur Plex : https://app.plex.tv/desktop/#!/server/{plex.machineIdentifier}/details?key={media.key}"
 
         # thumbnail
-        if movie.thumbUrl:
-            response = requests.get(movie.thumbUrl)
+        if media.thumbUrl:
+            response = requests.get(media.thumbUrl)
             if response.status_code == 200:
                 image_data = BytesIO(response.content)
                 webhook.add_file(file=image_data, filename="thumb.jpg")
