@@ -37,8 +37,10 @@ def main():
         if last_execution is None or added_at < last_execution:
             break
 
+        title = f"{movie.parentTitle} - {movie.title}" if hasattr(movie, "parentTitle") else movie.title
+
         embed = DiscordEmbed(
-            title=movie.title,
+            title=title,
             description=movie.summary,
             color=movie.ultraBlurColors.topLeft if movie.ultraBlurColors else "EBAF00"
         )
