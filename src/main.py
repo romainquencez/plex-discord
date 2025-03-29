@@ -18,9 +18,6 @@ def main():
     # plex
     plex = PlexServer(PLEX_URL, PLEX_TOKEN)
 
-    # discord
-    webhook = DiscordWebhook(url=WEBHOOK_URL)
-
     # read or create last update file
     try:
         with open(FILENAME, "r") as file:
@@ -36,6 +33,9 @@ def main():
         # if media is older than last added date, skip it
         if last_execution is None or added_at < last_execution:
             break
+
+        # initialize a new discord webhook
+        webhook = DiscordWebhook(url=WEBHOOK_URL)
 
         title = f"{media.parentTitle} - {media.title}" if hasattr(media, "parentTitle") else media.title
 
